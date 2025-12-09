@@ -95,3 +95,68 @@ export async function deleteUser(req,res) {
     
   }
 }
+
+export async function userProfile(req, res) {
+  const id = req.user._id;
+
+  try {
+    const user = await UserModel.findById(id);  // FIX
+
+    if (!user) {
+      return res.status(404).json({
+        success: false,
+        message: "User not found."
+      });
+    }
+
+    return res.status(200).json({
+      success: true,
+      user
+    });
+  } catch (err) {
+    console.error("Error in userProfile:", err);
+
+    return res.status(500).json({
+      success: false,
+      message: "Server error while fetching userProfile"
+    });
+  }
+}
+
+export async function updateProfile(req, res) {
+  const id = req.user._id;
+
+  const name = req.body.formData.name;
+  const email = req.body.formData.email;
+  const bio = req.body.formData.bio;
+  const githubUrl = req.body.formData.githubUrl;
+  const linkedinUrl = req.body.formData.linkedinUrl;
+  const avatar= req.body.formData.avatar;
+ 
+  try {
+    const user = await UserModel.findByIdAndUpdate(
+      id,
+      { name, email, bio, githubUrl, linkedinUrl,avatar },
+      { new: true, runValidators: true }
+    );
+
+    if (!user) {
+      return res.status(404).json({
+        success: false,
+        message: "User not found"
+      });
+    }
+
+    return res.status(200).json({
+      success: true,
+      user
+    });
+
+  } catch (err) {
+    console.error(err);
+    return res.status(500).json({
+      success: false,
+      message: "Server error while updating"
+    });
+  }
+}

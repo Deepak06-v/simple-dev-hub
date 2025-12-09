@@ -3,12 +3,12 @@ import axios from 'axios';
 import { User, Mail, MapPin, Link as LinkIcon, Github, Linkedin, Edit2, Save } from 'lucide-react';
 import Loader from './Loader';
 
-const trProfile = () => {
+const Profile = () => {
   const [user, setUser] = useState(null);
   const [loading, setLoading] = useState(true);
   const [editing, setEditing] = useState(false);
   const [formData, setFormData] = useState({});
-
+  
   useEffect(() => {
     const fetchUser = async () => {
       try {
@@ -41,9 +41,9 @@ const trProfile = () => {
 
   const handleSave = async () => {
     try {
-      const res = await axios.put(
-        "http://localhost:3000/user/profile",
-        formData,
+      const res = await axios.post(
+        "http://localhost:3000/user/updateProfile",
+          {formData},
         { withCredentials: true }
       );
       if (res.data.success) {
@@ -76,9 +76,11 @@ const trProfile = () => {
               {/* Profile Header */}
               <div className="flex justify-between items-center mb-8">
                 <div className="flex items-center gap-4">
-                  <div className="w-20 h-20 bg-gradient-to-br from-blue-500 to-purple-600 rounded-full flex items-center justify-center">
-                    <User size={40} className="text-white" />
-                  </div>
+                  <div
+                  className="w-20 h-20 rounded-full bg-cover bg-center"
+                  style={{ backgroundImage: `url(${formData?.avatar || ""})` }}
+                  ></div>
+
                   <div>
                     <h2 className="text-2xl font-bold text-white">{user.name || 'User'}</h2>
                     <p className="text-gray-400">@{user.username || 'username'}</p>
@@ -119,6 +121,22 @@ const trProfile = () => {
                     value={formData.email || ''}
                     disabled
                     className="w-full px-4 py-3 rounded-lg bg-gray-700 text-gray-300 outline-none"
+                  />
+                </div>
+
+                <div>
+                  <label className="block text-sm font-semibold text-gray-300 mb-2">Profile photo link</label>
+                  <textarea
+                    name="avatar"
+                    value={formData.avatar || ''}
+                    onChange={handleInputChange}
+                    disabled={!editing}
+                    rows="4"
+                    className={`w-full px-4 py-3 rounded-lg ${
+                      editing
+                        ? 'bg-gray-700 border border-gray-600 text-white focus:border-blue-500 focus:ring-2 focus:ring-blue-500'
+                        : 'bg-gray-700 text-gray-300'
+                    } outline-none transition resize-none`}
                   />
                 </div>
 
