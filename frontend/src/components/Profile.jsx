@@ -126,7 +126,7 @@ const Profile = () => {
 
                 <div>
                   <label className="block text-sm font-semibold text-gray-300 mb-2">Profile photo link</label>
-                  <textarea
+                  <input
                     name="avatar"
                     value={formData.avatar || ''}
                     onChange={handleInputChange}

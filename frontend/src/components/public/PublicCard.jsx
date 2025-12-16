@@ -1,19 +1,23 @@
 import React from 'react'
-import CardSkills from './cardSkills';
-import { Link } from 'react-router-dom';
+import CardSkills from '../cardSkills';
+import { Link,useNavigate } from 'react-router-dom';
+import PublicDetails from './PublicDetails';
 
-const projectcard = (props) => {
+const PublicCard = (props) => {
+    const navigate=useNavigate()
   return (
     <div className='bg-gray-800 h-auto w-full max-w-sm rounded-xl overflow-hidden shadow-lg hover:shadow-2xl border border-gray-700 transition duration-300 transform hover:scale-105'>
        <div className='h-[200px] w-full rounded-t-xl bg-gradient-to-br from-blue-600 to-purple-600 overflow-hidden'>
         <img src={props.data.thumbnail} alt="projectimage" className='h-full w-full rounded-lg object-cover'/>
         </div>
         <div className='p-4'>
-        <h1 className='mt-2 mb-3 font-bold text-xl tracking-wide text-white hover:text-blue-400 transition' >
-          <Link to={`/details/${props.data._id}`} state={{data: props.data}}>
-            {props.data.title}
-          </Link>                     
-          </h1>
+        <h1
+  className='mt-2 mb-3 font-bold text-xl tracking-wide text-white hover:text-blue-400 transition'
+  onClick={() => navigate(`/public/details/${props.data._id}`, { state: { data: props.data } })}
+>
+  {props.data.title}
+</h1>
+
         <p className='text-gray-400 text-sm mb-4 line-clamp-2'>{props.data.description || 'No description'}</p>
         <div className='flex mt-3 gap-2 flex-wrap'>
         {
@@ -40,4 +44,4 @@ const projectcard = (props) => {
   )
 }
 
-export default projectcard
+export default PublicCard;

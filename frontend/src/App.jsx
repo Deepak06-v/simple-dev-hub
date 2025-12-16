@@ -8,6 +8,8 @@ import Sidebar from "./components/Sidebar";
 import Bookmarks from "./components/Bookmarks";
 import Profile from "./components/Profile";
 import Settings from "./components/Settings";
+import Home from "./components/Home";
+import PublicDetails from "./components/public/PublicDetails";
 
 function App() {
   return (
@@ -24,7 +26,8 @@ function App() {
         <Route path="/bookmarks" element={<><Sidebar /><Bookmarks /></>} />
         <Route path="/profile" element={<><Sidebar /><Profile /></>} />
         <Route path="/settings" element={<><Sidebar /><Settings /></>} />
-        
+        <Route path="/home" element={<><Sidebar /> <Home /></>} />
+        <Route path="/public/details/:id" element={<><Sidebar /> <PublicDetails /></>} />
         <Route path="*" element={<div className="h-screen w-full bg-blue-500 flex justify-center items-center text-[100px]">404 Not Found!</div>} />
       </Routes>
     </>

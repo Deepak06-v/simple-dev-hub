@@ -10,6 +10,7 @@ import {
   Settings,
   LogOut,
   Lightbulb,
+  Kanban
 } from 'lucide-react';
 import axios from 'axios';
 
@@ -28,7 +29,8 @@ const Sidebar = () => {
   };
 
   const navItems = [
-    { label: 'My Projects', icon: Home, path: '/dashboard' },
+    {label:'Home',icon:Home,path:"/home"},
+    { label: 'My Projects', icon: Kanban, path: '/dashboard' },
     { label: 'Create Project', icon: Plus, path: '/projectForm' },
     { label: 'Bookmarks', icon: Bookmark, path: '/bookmarks' },
     { label: 'Profile', icon: User, path: '/profile' },

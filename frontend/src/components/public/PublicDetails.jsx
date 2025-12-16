@@ -2,10 +2,10 @@ import React, { useState, useEffect } from 'react'
 import { useParams, useNavigate } from 'react-router-dom'
 import axios from 'axios'
 import { Heart, Bookmark, Eye, Github, ExternalLink, User, Layers, Calendar, Share2 ,Trash, AwardIcon} from 'lucide-react'
-import CardSkills from './cardSkills'
+import CardSkills from '../cardSkills'
 
 
-const Details = () => {
+const PublicDetails = () => {
   const { id } = useParams()
   const navigate = useNavigate()
   const [project, setProject] = useState(null)
@@ -56,19 +56,6 @@ const Details = () => {
     }
   }
 
-  const handleDelete=async ()=>{
-    try{
-      alert("Are u sure want to delete this project ?")
-      const response=await axios.get(`http://localhost:3000/product/delete/${id}`,{withCredentials:true})
-      if(response.data.success){
-        console.log("Deleted successfully")
-      }
-      navigate("/dashboard")
-    } catch(err){
-      alert("Error while deleting.")
-    }
-  }
-
   const handleBookmark = async () => {
     try {
       const response = await axios.post(`http://localhost:3000/product/${id}/toggle-bookmark`, {}, {
@@ -100,7 +87,7 @@ const Details = () => {
           <h1 className="text-white text-3xl font-bold mb-4">Error Loading Project</h1>
           <p className="text-gray-300 mb-6">{error || 'Project not found'}</p>
           <button 
-            onClick={() => navigate('/dashboard')}
+            onClick={() => navigate('/home')}
             className="hover:bg-blue-700 bg-blue-500 text-white font-bold py-2 px-6 rounded-lg transition"
           >
             Back to Dashboard
@@ -116,19 +103,11 @@ const Details = () => {
         {/* Header Navigation */}
         <div id='nav' className='flex justify-between'>
         <button 
-          onClick={() => navigate('/dashboard')}
+          onClick={() => navigate('/home')}
           className="mb-8 bg-blue-500 text-white p-2 rounded-lg hover:text-blue-300 flex items-center gap-2 transition font-semibold"
         >
           ← Back to Projects
         </button>
-  
-<div id='nav2' className='flex justify-center align-middle gap-3'> 
-  <button onClick={handleDelete} className="mb-8 bg-blue-500 text-white p-2 rounded-lg hover:text-blue-300 flex items-center gap-2 transition font-semibold" > 
-    <Trash /> Delete </button>
-     <button className="mb-8 bg-blue-500 text-white p-2 rounded-lg hover:text-blue-300 flex items-center gap-2 transition font-semibold" > 
-      Edit
-       </button> 
-       </div>
 
         </div>
         {/* Main Content Card */}
@@ -284,4 +263,4 @@ const Details = () => {
   )
 }
 
-export default Details
+export default PublicDetails
